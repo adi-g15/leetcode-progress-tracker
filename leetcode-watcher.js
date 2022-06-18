@@ -11,7 +11,13 @@ import fs from "fs";
 
 // NOTE: The `node-fetch` module won't be required in node >= v18
 
-const usernames = ["adityag15", "chaurasiya_g", "gauravrobin2000415", "70deepak58"];
+// Add your Leetcode username in watchlist.json
+const usernames = JSON.parse(fs.readFileSync("watchlist.json"));
+
+if( !usernames ) {
+    console.error("No user to monitor");
+    process.exit(1);
+}
 
 let allQuestionsCount = null;
 let profiles = [];
