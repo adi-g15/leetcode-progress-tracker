@@ -1,18 +1,25 @@
+/**
+ * @author Aditya Gupta
+ * @year 2022
+ * @description Leetcode Profile Watcher, data can be used to graph your progress later
+ * @version 1.0
+ * @license Unlicense
+ * */
+
 import fetch from 'node-fetch';
+import jsonfile from 'jsonfile';
 
 // NOTE: The `node-fetch` module won't be required in node >= v18
 
 const usernames = ["adityag15", "chaurasiya_g", "gauravrobin2000415", "70deepak58"];
 
-// get current date
-let date = (new Date()).toDateString().split(" ").slice(1, 4).join(" ");
 let allQuestionsCount = null;
 let profiles = [];
 
 let profiles_fetched = 0;
 
 await new Promise((res, _) => {
-    usernames.forEach((uname, i) => {
+    usernames.forEach(uname => {
         // Got these from seeing requests in Networks tab
         const url = "https://leetcode.com/graphql";
         const body = {
@@ -61,10 +68,18 @@ await new Promise((res, _) => {
                  *  }
                  * }
                  * */
+		let modifiedProblemsSolvedBeatsStats = {};
+		data.matchedUser.problemsSolvedBeatsStats.forEach((entry) => {
+		    modifiedProblemsSolvedBeatsStats[entry.difficulty] = entry.percentage;
+		});
+		let modifiedSubmitStatsGlobal = {};
+		data.matchedUser.submitStatsGlobal.acSubmissionNum.forEach((entry) => {
+		    modifiedSubmitStatsGlobal[entry.difficulty] = entry.count;
+		});
                 profiles.push({
                     username: uname,
-                    problemsSolvedBeatsStats: data.matchedUser.problemsSolvedBeatsStats,
-                    submitStatsGlobal: data.matchedUser.submitStatsGlobal.acSubmissionNum,
+                    submitCounts: modifiedSubmitStatsGlobal,
+                    beatsPercentage: modifiedProblemsSolvedBeatsStats,
                 });
                 if (allQuestionsCount === null) {
                     allQuestionsCount = data.allQuestionsCount;
@@ -81,8 +96,17 @@ await new Promise((res, _) => {
     });
 });
 
-console.log({
-    date: date,
+const record = {
+    date: new Date,
     allQuestionsCount: allQuestionsCount,
     profiles
+};
+
+jsonfile.writeFile("records.json", record, { spaces: 4, flag: 'a' }, (err) => {
+    if (err) {
+	console.log(err);
+    }
 });
+
+console.log(record);
+

@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "start": "node leetcode-watcher.js",
-    "dev": "nodemon leetcode-watcher.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,8 +14,7 @@
   },
   "keywords": [
     "leetcode",
-    "jquery",
-    "web-scraping",
+    "graphql",
     "watcher"
   ],
   "author": "Aditya Gupta <ag15035 at gmail dot com>",
@@ -26,7 +24,7 @@
   },
   "homepage": "https://github.com/adi-g15/leetcode-profile-watcher#readme",
   "dependencies": {
-    "jsdom": "^19.0.0",
+    "jsonfile": "^6.1.0",
     "node-fetch": "^3.2.6"
   }
 }
