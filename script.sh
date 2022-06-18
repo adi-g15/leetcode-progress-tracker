@@ -14,7 +14,7 @@ npm run start
 
 : ${REPO_DIR:="/tmp/repo"}
 
-: ${GIT_REMOTE:="https://github.com/adi-g15/leetcode-progress-watcher"}
+: ${GIT_REMOTE:=""}
 : ${GIT_BRANCH:="records"}
 
 : ${GITHUB_ACTOR:=""}

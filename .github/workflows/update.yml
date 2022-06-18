@@ -1,3 +1,4 @@
+# https://github.com/adi-g15/archlinux-repository/blob/master/.github/workflows/build.yaml
 name: Update records
 
 on:
@@ -6,6 +7,8 @@ on:
   schedule:
     - cron: 30 12 * * * # Run at 7:00 Indian Standard Time (+5:30)
 
+env:
+  GIT_REMOTE: https://${{ github.actor }}:${{ github.token }}@github.com/${{ github.repository }}.git
 jobs:
   build:
     runs-on: ubuntu-latest
