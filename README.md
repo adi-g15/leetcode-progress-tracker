@@ -12,7 +12,14 @@ To get current progress (number of questions solved, etc.):
 npm run start
 ```
 
+* The relevant code is in `leetcode-watcher.js`
+* The records are written to `records.json`
+* `script.sh` is provided to setup crontab on linux locally. Plus I will add some functions to it to help the github action too
+* A Github action will also maintain the `records.json` for names written on this repo's `watchlist.json`
+
 ### Future
+
+Basically, I am collecting this data to analyse later… time is short currently :')
 
 * Add github workflow for cronjob (refer https://github.com/adi-g15/archlinux-repository/tree/master/.github/workflows)
 * Add a web interface (refer https://github.com/adi-g15/ipl_pred)

@@ -1,0 +1,26 @@
+name: Update records
+
+on:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: 30 12 * * * # Run at 7:00 Indian Standard Time (+5:30)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: ./script.sh githubaction
+
+# ex: shiftwidth=2 expandtab:

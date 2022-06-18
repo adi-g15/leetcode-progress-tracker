@@ -50,7 +50,14 @@ await new Promise((res, _) => {
             .then(res => res.json())
             .then(data => data.data)
             .then(data => {
-                profiles_fetched = profiles_fetched + 1;
+                if(!data.matchedUser) {
+                    console.error("Couldn't find user: " + uname);
+                    // Exit if this was the last profile to look for
+                    profiles_fetched = profiles_fetched + 1;
+                    if (profiles_fetched === usernames.length) {
+                        res();
+                    }
+                }
 
                 /**
                  * @type {Object} data
@@ -91,6 +98,7 @@ await new Promise((res, _) => {
                     allQuestionsCount = data.allQuestionsCount;
                 }
 
+                profiles_fetched = profiles_fetched + 1;
                 if (profiles_fetched === usernames.length) {
                     // Fetching all usernames done
                     res();
@@ -128,3 +136,4 @@ fs.writeFileSync("records.json", JSON.stringify(records, null, 4));
 
 console.log(record);
 
+// ex: shiftwidth=4 expandtab:
