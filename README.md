@@ -1,5 +1,7 @@
 # Leetcode Progress Watcher
 
+> **Github Action Status**: [![Update records](https://github.com/adi-g15/leetcode-progress-watcher/actions/workflows/update.yml/badge.svg)](https://github.com/adi-g15/leetcode-progress-watcher/actions/workflows/update.yml)
+
 Simple js script to fetch progress from leetcode profile.
 
 Iska use bas data dene me nhi hai, future me is data to analyze krke ek live progress graph banana hai, isliye isko Progress Watcher bola hai, abhi ke liye bas record save krte rhega har roj.
