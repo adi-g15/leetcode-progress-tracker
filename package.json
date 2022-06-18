@@ -1,5 +1,5 @@
 {
-  "name": "leetcode-profile-watcher",
+  "name": "leetcode-progress-watcher",
   "version": "0.0.1",
   "description": "Fetch progress from leetcode profile",
   "main": "leetcode-watcher.js",
