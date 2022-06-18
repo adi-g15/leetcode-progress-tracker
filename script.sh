@@ -14,7 +14,7 @@ npm run start
 
 : ${REPO_DIR:="/tmp/repo"}
 
-: ${GIT_REMOTE:=""}
+: ${GIT_REMOTE:="https://github.com/adi-g15/leetcode-progress-watcher"}
 : ${GIT_BRANCH:="records"}
 
 : ${GITHUB_ACTOR:=""}
@@ -43,7 +43,7 @@ githubaction() {
     git checkout --orphan "${GIT_BRANCH}"
     git add --all
     git config user.email "bot.noreply@github.com"
-    git config user.name "AdiG Bot"
+    git config user.name "Github Bot"
 
     git commit -m "Updated at $(date +'%Y/%m/%d %H:%M:%S')"
 

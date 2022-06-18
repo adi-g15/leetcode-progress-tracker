@@ -57,6 +57,7 @@ await new Promise((res, _) => {
                     if (profiles_fetched === usernames.length) {
                         res();
                     }
+                    return;
                 }
 
                 /**
