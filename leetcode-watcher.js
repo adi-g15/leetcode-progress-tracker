@@ -1,44 +1,88 @@
-import { JSDOM } from 'jsdom';
 import fetch from 'node-fetch';
-import fs from 'fs';
 
 // NOTE: The `node-fetch` module won't be required in node >= v18
 
-const classes = "mr-[5px] text-base font-medium leading-[20px] text-label-1 dark:text-dark-label-1";
+const usernames = ["adityag15", "chaurasiya_g", "gauravrobin2000415", "70deepak58"];
 
-const usernames = ["adityag15", "chaurasiya_g"];
+// get current date
+let date = (new Date()).toDateString().split(" ").slice(1, 4).join(" ");
+let allQuestionsCount = null;
+let profiles = [];
 
-usernames.forEach(uname => {
-    // get current date
-    let date = (new Date()).toDateString().split(" ").slice(1, 4).join(" ");
-    
-    const url = `https://leetcode.com/${uname}`;
+let profiles_fetched = 0;
 
-    // fetch url
-    fetch(url)
-	.then(res => res.text())
-	.then(body => {
-	    // create dom
-	    const dom = new JSDOM(body);
-	    // get dom
-	    const document = dom.window.document;
-	    // get all elements with class mr-5px text-base font-medium leading-20px text-label-1 dark:text-dark-label-1
-	    const elements = document.getElementsByClassName(classes);
+await new Promise((res, _) => {
+    usernames.forEach((uname, i) => {
+        // Got these from seeing requests in Networks tab
+        const url = "https://leetcode.com/graphql";
+        const body = {
+            query: "\n    query userProblemsSolved($username: String!) {\n  allQuestionsCount {\n    difficulty\n    count\n  }\n  matchedUser(username: $username) {\n    problemsSolvedBeatsStats {\n      difficulty\n      percentage\n    }\n    submitStatsGlobal {\n      acSubmissionNum {\n        difficulty\n        count\n      }\n    }\n  }\n}\n    ",
+            variables: {
+                username: uname,
+            }
+        };
 
-	    // write dom.serialize() to file
-	    const file = `${uname}-${date}.html`;
-	    fs.writeFile(file, dom.serialize(), (err) => {
-		if (err) throw err;
-		console.log(`${file} saved!`);
-	    });
+        // POST to url with body
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Language": "en-US,en;q=0.5",
+                "Connection": "keep-alive",
+            }
+        })
+            .then(res => res.json())
+            .then(data => data.data)
+            .then(data => {
+                profiles_fetched = profiles_fetched + 1;
 
-	    console.log(elements);
-	    console.log(`${uname}'s Leetcode stats:`);
-	    console.log(`${date}`);
-	    /*
-	    console.log(`${elements[0].innerHTML}`);
-	    console.log(`${elements[1].innerHTML}`);
-	    console.log(`${elements[2].innerHTML}`);
-	    */
-	})
+                /**
+                 * @type {Object} data
+                 * @property {Array} allQuestionsCount [{
+                 *	@key {String} difficulty
+                 *	@value {Number} count
+                 * }]
+                 * @property {Object} matchedUser {
+                 *	@key {String} problemsSolvedBeatsStats
+                 *	@value {Array}  [{
+                 *		@key {String} difficulty
+                 *		@value {Number} percentage
+                 *  }],
+                 *  @key {String} submitStatsGlobal
+                 *  @value {Object} {
+                 *  	@key {String} acSubmissionNum
+                 *  	@value {Array} [{
+                 *  		@key {String} difficulty
+                 *  		@value {Number} count
+                 *  	}]
+                 *  }
+                 * }
+                 * */
+                profiles.push({
+                    username: uname,
+                    problemsSolvedBeatsStats: data.matchedUser.problemsSolvedBeatsStats,
+                    submitStatsGlobal: data.matchedUser.submitStatsGlobal.acSubmissionNum,
+                });
+                if (allQuestionsCount === null) {
+                    allQuestionsCount = data.allQuestionsCount;
+                }
+
+                if (profiles_fetched === usernames.length) {
+                    // Fetching all usernames done
+                    res();
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    });
+});
+
+console.log({
+    date: date,
+    allQuestionsCount: allQuestionsCount,
+    profiles
 });
