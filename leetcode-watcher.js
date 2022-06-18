@@ -7,7 +7,7 @@
  * */
 
 import fetch from 'node-fetch';
-import jsonfile from 'jsonfile';
+import fs from "fs";
 
 // NOTE: The `node-fetch` module won't be required in node >= v18
 
@@ -96,17 +96,29 @@ await new Promise((res, _) => {
     });
 });
 
+// sort profiles based on username
+profiles.sort((a, b) => {
+    return a.username.localeCompare(b.username);
+});
+
 const record = {
     date: new Date,
     allQuestionsCount: allQuestionsCount,
     profiles
 };
 
-jsonfile.writeFile("records.json", record, { spaces: 4, flag: 'a' }, (err) => {
-    if (err) {
-	console.log(err);
-    }
-});
+// Read records.json
+let records = [];
+try {
+    records = JSON.parse(fs.readFileSync("records.json"));
+} catch (e) {
+    console.log("No records.json found/Failed to parse records.json");
+}
+
+records.push(record);
+
+// Write records back to records.json
+fs.writeFileSync("records.json", JSON.stringify(records, null, 4));
 
 console.log(record);
 

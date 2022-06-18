@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/adi-g15/leetcode-profile-watcher#readme",
   "dependencies": {
-    "jsonfile": "^6.1.0",
     "node-fetch": "^3.2.6"
   }
 }
