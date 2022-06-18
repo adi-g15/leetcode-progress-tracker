@@ -1,0 +1,32 @@
+{
+  "name": "leetcode-profile-watcher",
+  "version": "0.0.1",
+  "description": "Fetch progress from leetcode profile",
+  "main": "leetcode-watcher.js",
+  "type": "module",
+  "scripts": {
+    "start": "node leetcode-watcher.js",
+    "dev": "nodemon leetcode-watcher.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adi-g15/leetcode-profile-watcher.git"
+  },
+  "keywords": [
+    "leetcode",
+    "jquery",
+    "web-scraping",
+    "watcher"
+  ],
+  "author": "Aditya Gupta <ag15035 at gmail dot com>",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/adi-g15/leetcode-profile-watcher/issues"
+  },
+  "homepage": "https://github.com/adi-g15/leetcode-profile-watcher#readme",
+  "dependencies": {
+    "jsdom": "^19.0.0",
+    "node-fetch": "^3.2.6"
+  }
+}
