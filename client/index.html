@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="./bootstrap.js"></script>
+    <link rel="stylesheet" href="./global.css" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>IPL Calculator</title>
+</head>
+<body>
+    <form id="num_matches_form">
+        <label for="extra_num">Calculate chances till how many matches: <i>(Warning: Default is to calculate thinking there are max 18 matches more than current match, if it is more it may take longer time on slow CPUs)</i></label>
+        <input type="number" value="30" id="extra_num" name="extra_num" />
+        <button type="submit" class="chose_btn">Calculate</button>
+    </form>
+    <div id="chances_table"></div>
+    <div id="trends_graph"></div>
+    <div id="source_code"></div>
+</body>
+</html>

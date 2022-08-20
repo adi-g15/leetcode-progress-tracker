@@ -1,0 +1,22 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "Unlicense",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack serve"
+  },
+  "dependencies": {
+    "@wasm-tool/wasm-pack-plugin": "^1.4.0",
+    "copy-webpack-plugin": "^8.1.1",
+    "airtable-node": "^0.1.20",
+    "fast-html-parser": "^1.0.1",
+    "html-webpack-plugin": "^5.3.1",
+    "node-fetch": "^2.6.1",
+    "underscore": "^1.13.1",
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

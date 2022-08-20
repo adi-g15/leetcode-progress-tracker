@@ -1,0 +1,100 @@
+label {
+    margin-bottom: 2vh;
+}
+
+#source_code {
+    margin: 10px auto;
+    width: max-content;
+    font-size: 1.1rem;
+}
+
+.git_logo {
+    border: gray solid 1.5px;
+    width: 70px;
+    border-radius: 12px;
+    padding: 2px 6px;
+}
+
+.chose_btn {
+    background-color: #4CAF50;
+    /* Green */
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 8px 4px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+}
+
+.chose_btn:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+#chances_table {
+    margin: 0 auto;
+}
+
+#trends_graph {
+    margin: 1%;
+    width: 180%;
+}
+
+@media only screen and (min-width: 768px) {
+    #chances_table {
+        width: 24%;
+        float: left;
+        margin: 6% 3% 0; /*6% 3% 0 3%*/
+    }
+    #trends_graph {
+        width: 66%;
+        float: right;
+        margin-right: 2%;
+    }
+}
+
+input {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid black;
+}
+
+thead, tfoot {
+    background-color: #3f87a6;
+    color: #fff;
+}
+
+tbody {
+    background-color: #e4f0f5;
+}
+
+caption {
+    padding: 10px;
+    caption-side: bottom;
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid rgb(200, 200, 200);
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    font-size: .9rem;
+    margin: 0 auto;
+}
+
+td, th {
+    border: 1px solid rgb(190, 190, 190);
+    padding: 5px 10px;
+}
+
+td {
+    text-align: center;
+}
