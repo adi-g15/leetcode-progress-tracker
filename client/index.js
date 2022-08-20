@@ -1,6 +1,5 @@
-import * as wasm from "../pkg";
-import graph_data from "../data/graph_data";
-// import * as js_code from "./js_get_chances"; // for BENCHMARKING use only
+import _ from "underscore";
+import records from "../records";
 
 /**
  *
@@ -33,14 +32,14 @@ function get_num_finished_matches(data) {
  */
 function get_latest_chance() {
     let data_arr = [];
-    for (let key in graph_data) {
+    for (let key in records) {
         try {
             parseInt(key);
-            data_arr[key] = graph_data[key];
+            data_arr[key] = records[key];
         } catch { }
     }
 
-    return data_arr[data_arr.length-1];
+    return data_arr[data_arr.length - 1];
 }
 
 /**
@@ -49,15 +48,15 @@ function get_latest_chance() {
 function get_latest_min_qualification() {
     let last_pred = 0;  // 0th match
     let latest_min = 0;
-    for (const key in graph_data) {
-        if (Object.hasOwnProperty.call(graph_data, key)) {
-            if( ! /^\d+_min_q$/.test(key) ) continue; 
-            let match_num = parseInt(key.substr(0,key.indexOf("_min_q")));
+    for (const key in records) {
+        if (Object.hasOwnProperty.call(records, key)) {
+            if (! /^\d+_min_q$/.test(key)) continue;
+            let match_num = parseInt(key.substr(0, key.indexOf("_min_q")));
 
-            if( match_num > last_pred ) {
+            if (match_num > last_pred) {
                 console.log("Chosing ", key);
                 last_pred = match_num;
-                latest_min = graph_data[key];
+                latest_min = records[key];
             }
         }
     }
@@ -65,7 +64,7 @@ function get_latest_min_qualification() {
     return latest_min;
 }
 
-function initChancesTable() {
+function initProfilesTable() {
     const latest_chances_data = get_latest_chance();
 
     const scores_arr = [];
@@ -139,7 +138,7 @@ function handleClick(data, extra_matches_to_compute) {
 
     let call_time = Date.now();
     const possibilities = wasm.get_chances(JSON.stringify(data), extra_matches_to_compute);
-    console.info(`[Rust] Elapsed time: ${(Date.now() - call_time)/1000}s`);
+    console.info(`[Rust] Elapsed time: ${(Date.now() - call_time) / 1000}s`);
 
     // call_time = Date.now();
     // const _possibilities = js_code.get_chances(JSON.stringify(data), extra_matches_to_compute);
@@ -153,7 +152,7 @@ function handleClick(data, extra_matches_to_compute) {
 
     for (const key in scores) {
         if (Object.hasOwnProperty.call(scores, key)) {
-            if(key == "min_qual")   continue;
+            if (key == "min_qual") continue;
             const percentage = scores[key];
 
             scores_arr.push({ team: key, percentage });
@@ -174,68 +173,18 @@ function handleClick(data, extra_matches_to_compute) {
         }
 
         document.getElementById("score_table_notice").innerText = `TILL ${extra_matches_to_compute + get_num_finished_matches(data)} Matches`;
-    } catch(err) {
+    } catch (err) {
         console.error(err);
-        initChancesTable();
+        initProfilesTable();
     }
-
 }
-
-async function fetchData() {
-    return fetch("/.netlify/functions/league_matches")
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            else throw Error("Couldn't fetch data");
-        })
-        .then(matches => {
-            console.log("Got the data: ", matches.length);
-            if (!Array.isArray(matches)) throw new Error("Received JSON is not an Array");
-
-            return matches.map(match => ({  // we don't want the venue and date fields
-                '0': match['0'],
-                '1': match['1'],
-                res: match['res']
-            }));
-        })
-        .catch(err => {console.error(err)})
-}
-
-fetchData()
-    .then(json_obj => json_obj)
-    .catch(err => {
-        console.error("Fetch failed: ", err);
-        alert("Unable to get latest match data... Refresh karke dekhe 😟");
-    })
-    .then(data => {
-        window.ipl_json_data = data;
-
-        document.getElementById("extra_num").value = `${Math.min(18 + get_num_finished_matches(window.ipl_json_data), 56)}`;
-    })
-
-const matches_form = document.querySelector("#num_matches_form");
-matches_form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    return new Promise((resolve, reject) => {
-        let num_match = 30;
-
-        try {
-            num_match = parseInt(document.getElementById("extra_num").value)
-        } catch { }
-
-        handleClick(window.ipl_json_data, num_match - get_num_finished_matches(window.ipl_json_data));
-        resolve();
-    }).then(() => {});
-})
 
 function plotData() {
     let data_arr = [];
-    for (let key in graph_data) {
+    for (let key in records) {
         try {
             parseInt(key);
-            data_arr[key] = graph_data[key];
+            data_arr[key] = records[key];
         } catch { }
     }
 
@@ -329,15 +278,47 @@ function plotData() {
                 // zeroline: false
             },
             yaxis: {
-              title: 'Qualification chances',
-            //   showline: false,
+                title: 'Qualification chances',
+                //   showline: false,
                 zeroline: true
             }
         }
     );
 }
 
+function preprocessRecords(records) {
+    let records_ = records.map(record => {
+        let date = new Date(Date.parse(record["date"]));
+        let date_string = date.toDateString();
+    
+        return {
+            ...record,
+            date: date_string
+        };
+    });
+}
+
+document.records = preprocessRecords(records);
+document.lastrec = _.last(records);
+
+/*
+const matches_form = document.querySelector("#num_matches_form");
+matches_form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    return new Promise((resolve, reject) => {
+        let num_match = 30;
+
+        try {
+            num_match = parseInt(document.getElementById("extra_num").value)
+        } catch { }
+
+        handleClick(window.ipl_json_data, num_match - get_num_finished_matches(window.ipl_json_data));
+        resolve();
+    }).then(() => {});
+})
+
 initChancesTable();
 plotData();
-document.getElementById("source_code").innerHTML = `<strong>Source Code:</strong> <a href="https://github.com/adi-g15/ipl_pred" aria-label="Star adi-g15/ipl_pred on GitHub">https://github.com/adi-g15/ipl_pred</a>`;
+*/
 
