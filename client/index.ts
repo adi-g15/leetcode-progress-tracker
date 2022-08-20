@@ -1,48 +1,48 @@
-import("../records.json")
-    .then(records => {
-        console.log(records);
-        console.log({first: records[0]});
-    }).catch(err => {
-        console.log(err);
-    })
+const getRecords = import("../records.json")
 
-type LCRecord = {
-    date: string
+type LCProfile = {
+    username: string,
+    submitCounts: {
+        All: number | null,
+        Easy: number | null,
+        Medium: number | null,
+        Hard: number | null,
+    },
+    beatsPercentage: {
+        Easy: number | null,
+        Medium: number | null,
+        Hard: number | null,
+    }
 };
 
-/*
-function initProfilesTable() {
-    const latest_chances_data = [];
+type LCRecord = {
+    date: string,
+    profiles: LCProfile[]
+};
 
-    const scores_arr = [];
-
-    for (const team in latest_chances_data) {
-        if (Object.hasOwnProperty.call(latest_chances_data, team)) {
-            const percentage = latest_chances_data[team];
-
-            scores_arr.push({ team, percentage });
-        }
-    }
+function initProfilesTable(records: LCRecord[]) {
+    const last_record = records[records.length - 1];
+    const submit_counts = last_record.profiles.map(profile => {
+        return ({
+            username: profile.username,
+            count: profile.submitCounts["All"]
+        });
+    });
 
     // sorted in descending order
-    scores_arr.sort((a, b) => b.percentage - a.percentage);
+    submit_counts.sort((a, b) => b.count - a.count);
 
     document.getElementById("chances_table").innerHTML = "";
-    // const qualification = document.createElement("strong");
-    // qualification.id = "score_table_qualification";
-    // qualification.innerText = `Minimum Qualifying Points as of now: ${get_latest_min_qualification()}`;
-    // document.getElementById("chances_table").appendChild(qualification);
-
     const table = document.createElement("table");
     table.id = "score_table_rust";
     const thead = document.createElement("thead");
     const tr = document.createElement("tr");
-    const team_name = document.createElement("th");   // team name
-    const team_chances = document.createElement("th");   // team chances
-    team_name.innerText = "Team";
-    team_chances.innerText = "Chances";
-    tr.appendChild(team_name);
-    tr.appendChild(team_chances);
+    const username = document.createElement("th");   // team name
+    const counts = document.createElement("th");   // team chances
+    username.innerText = "Username";
+    counts.innerText = "Submit Count (All)";
+    tr.appendChild(username);
+    tr.appendChild(counts);
 
     thead.appendChild(tr);
     table.appendChild(thead);
@@ -50,14 +50,14 @@ function initProfilesTable() {
     const tbody = document.createElement("tbody");
     table.appendChild(tbody);
 
-    for (const score of scores_arr) {
+    for (const score of submit_counts) {
         const tr = document.createElement("tr");
-        tr.id = `${score.team}_tr`;
+        tr.id = `${score.username}_tr`;
         const t_name = document.createElement("td");
         const t_chances = document.createElement("td");
 
-        t_name.innerText = score.team;
-        t_chances.innerText = score.percentage;
+        t_name.innerText = score.username;
+        t_chances.innerText = score.count.toString();
 
         tr.appendChild(t_name);
         tr.appendChild(t_chances);
@@ -77,9 +77,9 @@ function initProfilesTable() {
     table.appendChild(caption);
 
     document.getElementById("chances_table").appendChild(table);
-
 }
 
+/*
 function handleClick(data, extra_matches_to_compute) {
     console.log("Data: ", data);
 
@@ -234,8 +234,9 @@ function plotData() {
 }
 */
 
-function preprocessRecords(records: [LCRecord]) {
-    let records_ = records.map(record => {
+function preprocessRecords(records: LCRecord[]) {
+    console.log({records});
+    return records.map(record => {
         let date = new Date(Date.parse(record["date"]));
         let date_string = date.toDateString();
     
@@ -245,6 +246,16 @@ function preprocessRecords(records: [LCRecord]) {
         };
     });
 }
+
+getRecords
+    .then((r_: LCRecord[]) => {
+        const records = preprocessRecords(r_);
+
+        initProfilesTable(records);
+    })
+    .catch(err => {
+        console.error("Failed to get records: ", err);
+    })
 
 //document.records = preprocessRecords(records);
 
