@@ -33,6 +33,10 @@ module.exports = {
         {
           from: "global.css",
         },
+        {
+          from: "../records.json",
+          to: "./data/records.json"
+        }
       ],
     }),
   ],

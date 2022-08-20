@@ -1,71 +1,18 @@
-import _ from "underscore";
-import records from "../records";
+import("../records.json")
+    .then(records => {
+        console.log(records);
+        console.log({first: records[0]});
+    }).catch(err => {
+        console.log(err);
+    })
 
-/**
- *
- * @param {[{"0": string, "1": string, "res": string}]} data
- * @returns {number} Number of finished matches
- */
-function get_num_finished_matches(data) {
-    let num_finished = 0;
-    for (let entry of data) {
-        if (/ won /.test(entry['res'])) {
-            num_finished += 1;
-            continue;
-        }
-        break;
-    }
-    return num_finished;
-}
+type LCRecord = {
+    date: string
+};
 
-/**
- * @returns {{
- *       "CSK": number,
- *       "MI": number,
- *       "RCB": number,
- *       "SRH": number,
- *       "PBKS": number,
- *       "KKR": number,
- *       "DC": number,
- *       "RR": number
- *   }}
- */
-function get_latest_chance() {
-    let data_arr = [];
-    for (let key in records) {
-        try {
-            parseInt(key);
-            data_arr[key] = records[key];
-        } catch { }
-    }
-
-    return data_arr[data_arr.length - 1];
-}
-
-/**
- * @returns {number}
- */
-function get_latest_min_qualification() {
-    let last_pred = 0;  // 0th match
-    let latest_min = 0;
-    for (const key in records) {
-        if (Object.hasOwnProperty.call(records, key)) {
-            if (! /^\d+_min_q$/.test(key)) continue;
-            let match_num = parseInt(key.substr(0, key.indexOf("_min_q")));
-
-            if (match_num > last_pred) {
-                console.log("Chosing ", key);
-                last_pred = match_num;
-                latest_min = records[key];
-            }
-        }
-    }
-
-    return latest_min;
-}
-
+/*
 function initProfilesTable() {
-    const latest_chances_data = get_latest_chance();
+    const latest_chances_data = [];
 
     const scores_arr = [];
 
@@ -285,8 +232,9 @@ function plotData() {
         }
     );
 }
+*/
 
-function preprocessRecords(records) {
+function preprocessRecords(records: [LCRecord]) {
     let records_ = records.map(record => {
         let date = new Date(Date.parse(record["date"]));
         let date_string = date.toDateString();
@@ -298,8 +246,7 @@ function preprocessRecords(records) {
     });
 }
 
-document.records = preprocessRecords(records);
-document.lastrec = _.last(records);
+//document.records = preprocessRecords(records);
 
 /*
 const matches_form = document.querySelector("#num_matches_form");
