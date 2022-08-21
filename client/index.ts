@@ -4,6 +4,7 @@ declare const Plotly: { [index:string]: Function };
 
 type DifficultyLevel = "Easy" | "Medium" | "Hard" | "All";
 
+/* Not using all stored data, such as allQuestionsCount, profiles[].beatsPercentage */
 type LCProfile = {
     username: string,
     submitCounts: {
@@ -12,11 +13,6 @@ type LCProfile = {
         Medium: number | null,
         Hard: number | null,
     },
-    beatsPercentage: {
-        Easy: number | null,
-        Medium: number | null,
-        Hard: number | null,
-    }
 };
 
 type LCRecord = {
@@ -104,7 +100,7 @@ function plotData(r_: LCRecord[], count_type: DifficultyLevel, days_count: numbe
     // x_arr contains array of dates
     // y_arr contains mapping from username to submitCount on corresponding date
     let x_arr = records.map(record => record.date);
-    let y_data: {[index: string]: number[]} = {};
+    let y_data: {[index: string]: (number | undefined)[]} = {};
     for(const uname of usernames) {
         y_data[uname] = [];
     }
@@ -112,7 +108,7 @@ function plotData(r_: LCRecord[], count_type: DifficultyLevel, days_count: numbe
     // Initialise y_data
     for(let record of records) {
         for (const profile of record.profiles) {
-            y_data[profile.username].push(profile.submitCounts[count_type] ?? 0)
+            y_data[profile.username].push(profile.submitCounts[count_type] ?? undefined)
         }
     }
 

@@ -1,5 +1,350 @@
 [
     {
+        "date": "2022-05-30T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 40,
+                    "Medium": 47,
+                    "Hard": 0,
+                    "All": 87
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 111,
+                    "Medium": 48,
+                    "Hard": 2,
+                    "All": 161
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-05-31T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 42,
+                    "Medium": 51,
+                    "Hard": 0,
+                    "All": 93
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 112,
+                    "Medium": 49,
+                    "Hard": 2,
+                    "All": 163
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-01T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 44,
+                    "Medium": 53,
+                    "Hard": 0,
+                    "All": 97
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 116,
+                    "Medium": 51,
+                    "Hard": 2,
+                    "All": 169
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-02T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 50,
+                    "Medium": 58,
+                    "Hard": 1,
+                    "All": 109
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 118,
+                    "Medium": 53,
+                    "Hard": 4,
+                    "All": 175
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-03T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 52,
+                    "Medium": 61,
+                    "Hard": 1,
+                    "All": 114
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 122,
+                    "Medium": 56,
+                    "Hard": 6,
+                    "All": 184
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-04T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 53,
+                    "Medium": 63,
+                    "Hard": 3,
+                    "All": 119
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 123,
+                    "Medium": 64,
+                    "Hard": 6,
+                    "All": 193
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-05T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 65,
+                    "Medium": 65,
+                    "Hard": 3,
+                    "All": 133
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 124,
+                    "Medium": 65,
+                    "Hard": 6,
+                    "All": 195
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-06T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 69,
+                    "Medium": 65,
+                    "Hard": 3,
+                    "All": 137
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 124,
+                    "Medium": 70,
+                    "Hard": 6,
+                    "All": 200
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-07T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 72,
+                    "Medium": 69,
+                    "Hard": 3,
+                    "All": 144
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 126,
+                    "Medium": 71,
+                    "Hard": 6,
+                    "All": 203
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-08T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 76,
+                    "Medium": 70,
+                    "Hard": 3,
+                    "All": 149
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 126,
+                    "Medium": 75,
+                    "Hard": 6,
+                    "All": 207
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-09T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 76,
+                    "Medium": 70,
+                    "Hard": 4,
+                    "All": 150
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 126,
+                    "Medium": 79,
+                    "Hard": 6,
+                    "All": 211
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-10T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 78,
+                    "Medium": 73,
+                    "Hard": 4,
+                    "All": 155
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 126,
+                    "Medium": 82,
+                    "Hard": 6,
+                    "All": 214
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-11T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 80,
+                    "Medium": 75,
+                    "Hard": 4,
+                    "All": 159
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 129,
+                    "Medium": 86,
+                    "Hard": 6,
+                    "All": 221
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-12T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 81,
+                    "Medium": 75,
+                    "Hard": 4,
+                    "All": 160
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 129,
+                    "Medium": 88,
+                    "Hard": 6,
+                    "All": 223
+                }
+            }
+        ]
+    },
+    {
+        "date": "2022-06-13T18:30:00.000Z",
+        "profiles": [
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "Easy": 81,
+                    "Medium": 79,
+                    "Hard": 4,
+                    "All": 164
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "Easy": 131,
+                    "Medium": 88,
+                    "Hard": 7,
+                    "All": 226
+                }
+            }
+        ]
+    },
+    {
         "date": "2022-06-18T12:31:28.371Z",
         "allQuestionsCount": [
             {
