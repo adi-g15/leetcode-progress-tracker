@@ -12,18 +12,27 @@
 </head>
 
 <body>
-    <form id="num_matches_form">
-        <label for="extra_num">
-            Show progress in past n days: (Max {{MAX_DAYS}})
-        </label>
-        </br>
-        <input type="number" value="30" id="extra_num" name="extra_num" />
-        <button type="submit" class="chose_btn">Calculate</button>
-    </form>
-    <div id="chances_table"></div>
+    <div class="preferences">
+        <input
+            placeholder="Show progress in past n days: (Max {{MAX_DAYS}})"
+            type="number"
+            id="days_count"
+            min=1
+        />
+        <select
+            placeholder="Difficulty Level"
+            id="difficulty_level"
+        >
+            <option value="All">All</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+        </select>
+    </div>
+    <div id="counts_table"></div>
     <div id="trends_graph"></div>
-    <div id="source_code"><strong>Source Code:</strong> <a href="https://github.com/adi-g15/ipl_pred"
-            aria-label="Star adi-g15/ipl_pred on GitHub">https://github.com/adi-g15/ipl_pred</a></div>
+    <div id="source_code"><strong>Source Code:</strong> <a href="https://github.com/adi-g15/leetcode-progress-watcher"
+            aria-label="Star adi-g15/leetcode-progress-watcher on GitHub">https://github.com/adi-g15/leetcode-progress-watcher</a></div>
 </body>
 
 </html>

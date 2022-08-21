@@ -36,7 +36,7 @@ label {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
-#chances_table {
+#counts_table {
     margin: 0 auto;
 }
 
@@ -46,7 +46,7 @@ label {
 }
 
 @media only screen and (min-width: 768px) {
-    #chances_table {
+    #counts_table {
         width: 24%;
         float: left;
         margin: 6% 3% 0; /*6% 3% 0 3%*/
@@ -58,13 +58,19 @@ label {
     }
 }
 
-input {
-    width: 50%;
+input, select {
+    width: 30%;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
     border: none;
     border-bottom: 2px solid black;
+}
+
+@media only screen and (max-width: 768px) {
+    input, select {
+        width: 100%
+    }
 }
 
 thead, tfoot {
