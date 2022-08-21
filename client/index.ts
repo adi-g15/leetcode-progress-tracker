@@ -1,4 +1,8 @@
 const getRecords = import("../records.json")
+const { randomColor } = require("randomcolor");
+declare const Plotly: { [index:string]: Function };
+
+type DifficultyLevel = "Easy" | "Medium" | "Hard" | "All";
 
 type LCProfile = {
     username: string,
@@ -20,25 +24,25 @@ type LCRecord = {
     profiles: LCProfile[]
 };
 
-function initProfilesTable(records: LCRecord[]) {
+function updateProfilesTable(records: LCRecord[]) {
     const last_record = records[records.length - 1];
     const submit_counts = last_record.profiles.map(profile => {
         return ({
             username: profile.username,
-            count: profile.submitCounts["All"]
+            count: profile.submitCounts[difficulty_level]
         });
     });
 
     // sorted in descending order
-    submit_counts.sort((a, b) => b.count - a.count);
+    submit_counts.sort((a, b) => (b.count??0) - (a.count??0));
 
-    document.getElementById("chances_table").innerHTML = "";
+    document.getElementById("counts_table")!.innerHTML = "";
     const table = document.createElement("table");
     table.id = "score_table_rust";
     const thead = document.createElement("thead");
     const tr = document.createElement("tr");
     const username = document.createElement("th");   // team name
-    const counts = document.createElement("th");   // team chances
+    const counts = document.createElement("th");   // team counts
     username.innerText = "Username";
     counts.innerText = "Submit Count (All)";
     tr.appendChild(username);
@@ -54,13 +58,17 @@ function initProfilesTable(records: LCRecord[]) {
         const tr = document.createElement("tr");
         tr.id = `${score.username}_tr`;
         const t_name = document.createElement("td");
-        const t_chances = document.createElement("td");
+        const t_counts = document.createElement("td");
 
-        t_name.innerText = score.username;
-        t_chances.innerText = score.count.toString();
+        if (t_name && t_counts) {
+            t_name.innerText = score.username;
+            t_counts.innerText = score.count!.toString();
+        } else {
+            throw "Development Bug";
+        }
 
         tr.appendChild(t_name);
-        tr.appendChild(t_chances);
+        tr.appendChild(t_counts);
 
         tbody.appendChild(tr);
     }
@@ -68,7 +76,7 @@ function initProfilesTable(records: LCRecord[]) {
     const caption = document.createElement("caption");
     const notice = document.createElement("strong");
     notice.id = "score_table_notice";
-    notice.innerText = `Current Situation (ie. 56 league matches tak)`;
+    notice.innerText = `Current Progress`;
     const p = document.createElement("p");
     p.innerText = "Chances of teams qualifying for PlayOffs";
 
@@ -76,188 +84,165 @@ function initProfilesTable(records: LCRecord[]) {
     caption.appendChild(p);
     table.appendChild(caption);
 
-    document.getElementById("chances_table").appendChild(table);
+    document.getElementById("counts_table")!.appendChild(table);
 }
 
-/*
-function handleClick(data, extra_matches_to_compute) {
-    console.log("Data: ", data);
+function plotData(r_: LCRecord[], count_type: DifficultyLevel, days_count: number) {
+    // don't change the graph on such invalid input
+    if (days_count <= 0 || isNaN(days_count)) return;
 
-    let call_time = Date.now();
-    const possibilities = wasm.get_chances(JSON.stringify(data), extra_matches_to_compute);
-    console.info(`[Rust] Elapsed time: ${(Date.now() - call_time) / 1000}s`);
+    let records = r_.slice(-days_count);
 
-    // call_time = Date.now();
-    // const _possibilities = js_code.get_chances(JSON.stringify(data), extra_matches_to_compute);
-    // console.info(`[JS] Elapsed time: ${(Date.now() - call_time)/1000}s`);
+    let set = new Set();
+    for(const record of records) {
+        for(const profile of record.profiles) {
+            set.add(profile.username);
+        }
+    }
+    const usernames = Array.from(set) as string[];
 
-    console.log("Received from rust: ", possibilities);
+    // x_arr contains array of dates
+    // y_arr contains mapping from username to submitCount on corresponding date
+    let x_arr = records.map(record => record.date);
+    let y_data: {[index: string]: number[]} = {};
+    for(const uname of usernames) {
+        y_data[uname] = [];
+    }
 
-    const scores = JSON.parse(possibilities);    // returns Javascript object
-
-    const scores_arr = [];
-
-    for (const key in scores) {
-        if (Object.hasOwnProperty.call(scores, key)) {
-            if (key == "min_qual") continue;
-            const percentage = scores[key];
-
-            scores_arr.push({ team: key, percentage });
+    // Initialise y_data
+    for(let record of records) {
+        for (const profile of record.profiles) {
+            y_data[profile.username].push(profile.submitCounts[count_type] ?? 0)
         }
     }
 
-    // sorted in descending order
-    scores_arr.sort((a, b) => b.percentage - a.percentage);
-
-    try {
-        document.getElementById("score_table_rust").id; // this must cause a failure, if not available
-
-        for (const score of scores_arr) {
-            const tr = document.getElementById(`${score.team}_tr`);
-            const t_chances = tr.children[1];
-
-            t_chances.innerText = score.percentage;
+    // Ensure that length of each y_data[username] is same and equals = days_count
+    for(let username in y_data) {
+        while(y_data[username].length < days_count) {
+            y_data[username].unshift(undefined!)
         }
-
-        document.getElementById("score_table_notice").innerText = `TILL ${extra_matches_to_compute + get_num_finished_matches(data)} Matches`;
-    } catch (err) {
-        console.error(err);
-        initProfilesTable();
-    }
-}
-
-function plotData() {
-    let data_arr = [];
-    for (let key in records) {
-        try {
-            parseInt(key);
-            data_arr[key] = records[key];
-        } catch { }
     }
 
-    console.log("Plotting Data; Total rows in graph_data (data keys only): ", data_arr);
-
-    let x_arr = data_arr.map((_, i) => i);
-    let csk_arr = data_arr.map((entry) => entry['CSK']);
-    let rr_arr = data_arr.map((entry) => entry['RR']);
-    let mi_arr = data_arr.map((entry) => entry['MI']);
-    let dd_arr = data_arr.map((entry) => entry['DC']);
-    let pbks_arr = data_arr.map((entry) => entry['PBKS']);
-    let rcb_arr = data_arr.map((entry) => entry['RCB']);
-    let srh_arr = data_arr.map((entry) => entry['SRH']);
-    let kkr_arr = data_arr.map((entry) => entry['KKR']);
+    console.log("Plotting Data:", {x_arr, y_data});
+    
+    const plotted_data = Object.keys(y_data).map(username => {
+        return {
+            x: x_arr,
+            y: y_data[username],
+            name: username,
+            line: {
+                color: randomColor(),
+                width: 2
+            }
+        };
+    });
 
     Plotly.newPlot(
         'trends_graph',
-        [{
-            x: x_arr,
-            y: csk_arr,
-            name: "CSK",
-            line: {
-                color: 'rgb(255, 255, 60)',
-                width: 2
-            }
-        }, {
-            x: x_arr,
-            y: rr_arr,
-            name: "RR",
-            line: {
-                color: 'rgb(37, 74, 165)',
-                width: 2
-            }
-        }, {
-            x: x_arr,
-            y: mi_arr,
-            name: "MI",
-            line: {
-                color: 'rgb(0, 75, 150)',
-                width: 2
-            }
-        }, {
-            x: x_arr,
-            y: dd_arr,
-            name: "DC",
-            line: {
-                color: 'rgb(239, 27, 35)',
-                width: 2
-            }
-        }, {
-            x: x_arr,
-            y: pbks_arr,
-            name: "PBKS",
-            line: {
-                color: 'rgb(237, 27, 36)',
-                width: 2
-            }
-        }, {
-            x: x_arr,
-            y: rcb_arr,
-            name: "RCB",
-            line: {
-                color: 'rgb(43, 42, 41)',
-                width: 2
-            }
-        }, {
-            x: x_arr,
-            y: srh_arr,
-            name: "SRH",
-            line: {
-                color: 'rgb(255, 130, 42)',
-                width: 2
-            }
-        }, {
-            x: x_arr,
-            y: kkr_arr,
-            name: "KKR",
-            line: {
-                color: 'rgb(46, 8, 84)',
-                width: 2
-            }
-        }],
+        plotted_data,
         {
-            title: "Trend of Qualification Chances of teams for Playoffs",
+            title: "Leetcode Progress",
             // margin: { t: 40 },
             // height: '80%',
             // width: '100%',
             xaxis: {
-                title: "Number of finished matches",
+                title: '',
                 // showgrid: false,
                 // zeroline: false
             },
             yaxis: {
-                title: 'Qualification chances',
+                title: `Submit Count (${count_type})`,
                 //   showline: false,
                 zeroline: true
             }
         }
     );
 }
-*/
 
-function preprocessRecords(records: LCRecord[]) {
-    console.log({records});
-    return records.map(record => {
+function preprocessRecords(r_: LCRecord[]) {
+    /* records is not of type "Array", for some reason when using dynamic import
+     * lekin .length property hai, isliye aise loop se access kr rha hu */
+    let records = Array.from(r_).map(record => {
         let date = new Date(Date.parse(record["date"]));
-        let date_string = date.toDateString();
+        // date_string is of the form: 'Aug 21 2022'
+        let date_string = date.toDateString().split(' ').splice(1).join(' ');
     
         return {
             ...record,
             date: date_string
         };
     });
+
+    let deduplicated_records = [];
+
+    for (let i = 0; i < records.length; i++) {
+        /* Chose the last record of each day, for example there maybe 2 each day
+         * one of morning aur ek shaam ke time ka */
+        while (i < (records.length-1) && records[i+1].date == records[i].date) {
+            ++i;
+        }
+
+        deduplicated_records.push(records[i]);
+    }
+
+    return deduplicated_records;
 }
+
+/**
+ * Will be effective only once
+ */
+function setMaxDaysCount(days_count: number) {
+    let count = document.getElementById("days_count") as HTMLInputElement;
+
+    if (count) {
+        count.placeholder = count.placeholder.replace("{{MAX_DAYS}}", days_count.toString());
+        count.max = days_count.toString();
+    } else {
+        console.error("Development Bug: Count field (#days_count) not found");
+    }
+}
+
+/* onChange handler for days count input field */
+function onDaysCountChangeHandler(e: Event) {
+    let count = document.getElementById("days_count") as HTMLInputElement;
+
+    days_count = parseInt(count.value);
+    updateProfilesTable(dedup_records);
+    plotData(dedup_records, difficulty_level, days_count);
+
+    console.log("Current count: ", days_count);
+}
+
+/* onChange handler for Difficulty Level select field */
+function onDifficultyLevelChangeHandler(e: Event) {
+    let level = document.getElementById("difficulty_level") as HTMLSelectElement;
+
+    difficulty_level = level.value as DifficultyLevel;
+    updateProfilesTable(dedup_records);
+    plotData(dedup_records, difficulty_level, days_count);
+
+    console.log("Current level: ", difficulty_level);
+}
+
+var dedup_records: LCRecord[] = [];
+var days_count = 0;
+var difficulty_level: DifficultyLevel = "All";
 
 getRecords
     .then((r_: LCRecord[]) => {
-        const records = preprocessRecords(r_);
+        dedup_records = preprocessRecords(r_);
 
-        initProfilesTable(records);
-    })
+        updateProfilesTable(dedup_records);
+        setMaxDaysCount(dedup_records.length);
+        days_count = dedup_records.length;
+        plotData(dedup_records, difficulty_level, days_count);
+
+        document.getElementById("days_count")!.oninput = onDaysCountChangeHandler;
+        document.getElementById("difficulty_level")!.onchange = onDifficultyLevelChangeHandler;
+   })
     .catch(err => {
         console.error("Failed to get records: ", err);
     })
-
-//document.records = preprocessRecords(records);
 
 /*
 const matches_form = document.querySelector("#num_matches_form");
