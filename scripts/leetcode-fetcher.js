@@ -11,8 +11,8 @@ import fs from "fs";
 
 // NOTE: The `node-fetch` module won't be required in node >= v18
 
-// Add your Leetcode username in watchlist.json
-const usernames = JSON.parse(fs.readFileSync("watchlist.json"));
+// Add your Leetcode username in ../data/watchlist.json
+const usernames = JSON.parse(fs.readFileSync("../data/watchlist.json"));
 
 if( !usernames ) {
     console.error("No user to monitor");
@@ -125,15 +125,15 @@ const record = {
 // Read records.json
 let records = [];
 try {
-    records = JSON.parse(fs.readFileSync("records.json"));
+    records = JSON.parse(fs.readFileSync("../data/records.json"));
 } catch (e) {
-    console.log("No records.json found/Failed to parse records.json");
+    console.log("No ../data/records.json found/Failed to parse");
 }
 
 records.push(record);
 
 // Write records back to records.json
-fs.writeFileSync("records.json", JSON.stringify(records, null, 4));
+fs.writeFileSync("../data/records.json", JSON.stringify(records, null, 4));
 
 console.log(record);
 

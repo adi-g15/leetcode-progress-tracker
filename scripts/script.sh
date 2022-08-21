@@ -7,8 +7,7 @@ if [ -f $HOME/.nvm/nvm.sh ]; then
   source $HOME/.nvm/nvm.sh
 fi
 
-cp records.json records.json.bak || true
-npm run start
+node leetcode-fetcher.js
 
 ### AFTER THIS LINE, IT'S RELEVANT FOR GITHUB ACTION ###
 
@@ -25,15 +24,16 @@ ensure_env() {
 # PRE-REQUISITES:
 # 1. GIT_REMOTE be defined containing token
 # 2. npm install already run
+# 3. records.json already updated above
 githubaction() {
     ensure_env GIT_REMOTE
     ensure_env GITHUB_ACTOR
 
     ## Step 1: Update the records, assuming currently in the cloned directory
-    npm run start
+    # This is already done above
 
     ## Step 2: Commit the files
-    git add records.json
+    git add ../data/records.json
     git config user.email "bot.noreply@github.com"
     git config user.name "adityag-gitbot"
 

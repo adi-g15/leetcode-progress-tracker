@@ -1,4 +1,4 @@
-const getRecords = import("../records.json")
+const getRecords = import("./data/records.json")
 const { randomColor } = require("randomcolor");
 declare const Plotly: { [index:string]: Function };
 
@@ -73,11 +73,7 @@ function updateProfilesTable(records: LCRecord[]) {
     const notice = document.createElement("strong");
     notice.id = "score_table_notice";
     notice.innerText = `Current Progress`;
-    const p = document.createElement("p");
-    p.innerText = "Chances of teams qualifying for PlayOffs";
-
     caption.appendChild(notice);
-    caption.appendChild(p);
     table.appendChild(caption);
 
     document.getElementById("counts_table")!.appendChild(table);
