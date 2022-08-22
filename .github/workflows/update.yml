@@ -23,7 +23,5 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: ./scripts/script.sh githubaction
-      with:
-        path: scripts # REQUIRED. Kyunki ../data/
 
 # ex: shiftwidth=2 expandtab:
