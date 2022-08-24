@@ -2,6 +2,7 @@
 name: Update records
 
 on:
+  push:
   schedule:
     - cron: "30 1 * * *" # Run at 7:00 Indian Standard Time (+5:30)
 
