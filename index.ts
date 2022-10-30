@@ -71,7 +71,7 @@ function updateProfilesTable(records: LCRecord[]) {
 
     const caption = document.createElement("caption");
     const notice = document.createElement("strong");
-    notice.id = "score_table_notice";a="".join(x for x in s)
+    notice.id = "score_table_notice";
     notice.innerText = `Current Progress`;
     caption.appendChild(notice);
     table.appendChild(caption);
