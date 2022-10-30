@@ -24,7 +24,7 @@ function updateProfilesTable(records: LCRecord[]) {
     const last_record = records[records.length - 1];
     const submit_counts = last_record.profiles.map(profile => {
         return ({
-            username: profile.username,
+            username: "https://leetcode.com/"+profile.username,
             count: profile.submitCounts[difficulty_level]
         });
     });
@@ -71,7 +71,7 @@ function updateProfilesTable(records: LCRecord[]) {
 
     const caption = document.createElement("caption");
     const notice = document.createElement("strong");
-    notice.id = "score_table_notice";
+    notice.id = "score_table_notice";a="".join(x for x in s)
     notice.innerText = `Current Progress`;
     caption.appendChild(notice);
     table.appendChild(caption);
