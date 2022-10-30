@@ -37,7 +37,7 @@ githubaction() {
     git config user.email "bot.noreply@github.com"
     git config user.name "adityag-gitbot"
 
-    git commit -m "Auto-Updated at $(date +'%Y/%m/%d %H:%M:%S')"
+    git commit -m "update: auto-updated at $(date +'%Y/%m/%d %H:%M:%S')"
 
     ## Step 3: Push, assuming remote 'origin' already set (by default, it is)
     git push origin main	# Pushing to current branch itself
