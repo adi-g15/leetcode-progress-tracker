@@ -12,7 +12,7 @@ Track your daily progress on leetcode. Automate data collection. See a graph of 
 Deployed at https://leetcode-progress.netlify.app/.
 
 To use yourself:
-1. Edit `scripts/watchlist.json` to add your usernames
+1. Edit `data/watchlist.json` to add your usernames
 2. Remove `data/records.json` to start from fresh
 
 ### Usage
