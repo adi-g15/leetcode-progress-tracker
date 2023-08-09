@@ -58203,5 +58203,168 @@
                 }
             }
         ]
+    },
+    {
+        "date": "2023-08-09T02:10:19.085Z",
+        "allQuestionsCount": [
+            {
+                "difficulty": "All",
+                "count": 2813
+            },
+            {
+                "difficulty": "Easy",
+                "count": 705
+            },
+            {
+                "difficulty": "Medium",
+                "count": 1490
+            },
+            {
+                "difficulty": "Hard",
+                "count": 618
+            }
+        ],
+        "profiles": [
+            {
+                "username": "70deepak58",
+                "submitCounts": {
+                    "All": 486,
+                    "Easy": 280,
+                    "Medium": 188,
+                    "Hard": 18
+                },
+                "beatsPercentage": {
+                    "Easy": 99.4,
+                    "Medium": 93.71,
+                    "Hard": 75.6
+                }
+            },
+            {
+                "username": "adityag15",
+                "submitCounts": {
+                    "All": 307,
+                    "Easy": 130,
+                    "Medium": 162,
+                    "Hard": 15
+                },
+                "beatsPercentage": {
+                    "Easy": 94.64,
+                    "Medium": 92.15,
+                    "Hard": 72
+                }
+            },
+            {
+                "username": "anurag__pathak",
+                "submitCounts": {
+                    "All": 463,
+                    "Easy": 189,
+                    "Medium": 226,
+                    "Hard": 48
+                },
+                "beatsPercentage": {
+                    "Easy": 97.9,
+                    "Medium": 95.38,
+                    "Hard": 91.48
+                }
+            },
+            {
+                "username": "chaurasiya_g",
+                "submitCounts": {
+                    "All": 504,
+                    "Easy": 212,
+                    "Medium": 267,
+                    "Hard": 25
+                },
+                "beatsPercentage": {
+                    "Easy": 98.51,
+                    "Medium": 96.66,
+                    "Hard": 81.69
+                }
+            },
+            {
+                "username": "coding_monster",
+                "submitCounts": {
+                    "All": 0,
+                    "Easy": 0,
+                    "Medium": 0,
+                    "Hard": 0
+                },
+                "beatsPercentage": {
+                    "Easy": null,
+                    "Medium": null,
+                    "Hard": null
+                }
+            },
+            {
+                "username": "gauravrobin2000415",
+                "submitCounts": {
+                    "All": 117,
+                    "Easy": 80,
+                    "Medium": 37,
+                    "Hard": 0
+                },
+                "beatsPercentage": {
+                    "Easy": 87.22,
+                    "Medium": 69.23,
+                    "Hard": null
+                }
+            },
+            {
+                "username": "Rahul1666",
+                "submitCounts": {
+                    "All": 482,
+                    "Easy": 219,
+                    "Medium": 236,
+                    "Hard": 27
+                },
+                "beatsPercentage": {
+                    "Easy": 98.65,
+                    "Medium": 95.73,
+                    "Hard": 83.04
+                }
+            },
+            {
+                "username": "raushanbjp2000",
+                "submitCounts": {
+                    "All": 34,
+                    "Easy": 23,
+                    "Medium": 10,
+                    "Hard": 1
+                },
+                "beatsPercentage": {
+                    "Easy": 56.02,
+                    "Medium": 41.37,
+                    "Hard": null
+                }
+            },
+            {
+                "username": "return_404",
+                "submitCounts": {
+                    "All": 1071,
+                    "Easy": 289,
+                    "Medium": 628,
+                    "Hard": 154
+                },
+                "beatsPercentage": {
+                    "Easy": 99.46,
+                    "Medium": 99.76,
+                    "Hard": 99.21
+                }
+            },
+            {
+                "username": "shubhams03",
+                "submitCounts": {
+                    "All": 1068,
+                    "Easy": 281,
+                    "Medium": 596,
+                    "Hard": 191
+                },
+                "beatsPercentage": {
+                    "Easy": 99.41,
+                    "Medium": 99.71,
+                    "Hard": 99.56
+                }
+            }
+        ]
     }
 ]
